@@ -59,15 +59,13 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                'Editar Perfil',
+                                'Enviar Formulario',
                                 style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
                               ),
-                              SizedBox(width: 20),
-                              Icon(Icons.edit, color: Colors.white, size: 30),
                             ],
                           ),
                         ),
