@@ -1,14 +1,18 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:icare/ui/homepage.dart'; // Replace with the name of your home page file
+import 'package:icare/ui/homepage.dart';
+import 'package:icare/widgets/loading_logo.dart'; // Replace with the name of your home page file
 
 class LoadingScreen extends StatefulWidget {
+  const LoadingScreen({Key? key}) : super(key: key);
+
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  // ignore: unused_field
   @override
   void initState() {
     super.initState();
@@ -16,7 +20,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   Future<Timer> loadData() async {
-    return Timer(const Duration(seconds: 2), onDoneLoading);
+    return Timer(const Duration(seconds: 5), onDoneLoading);
   }
 
   void onDoneLoading() {
@@ -31,17 +35,36 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF4093CE),
+              Color(0xFF9BCEF3),
+            ],
+          ),
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/logo.png', // Replace with your own logo image path
-              height: 100,
-              width: 100,
+            const SizedBox(height: 60.0),
+            Flexible(
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.all(35.0),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 50),
+                        child: const LoadingLogo(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(height: 20),
-            const CircularProgressIndicator(), // Add a circular loading indicator
           ],
         ),
       ),
