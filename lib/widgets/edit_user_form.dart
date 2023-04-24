@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 
 class FormularioUsuario extends StatefulWidget {
   const FormularioUsuario({Key? key}) : super(key: key);

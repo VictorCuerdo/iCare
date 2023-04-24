@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:icare/ui/homepage.dart';
 import 'package:icare/widgets/loading_logo.dart'; // Replace with the name of your home page file
