@@ -17,6 +17,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
   double? _height;
   String? _age;
   DateTime? _fechaVacuna;
+  String? _edad;
   final Map<String, bool> _symptoms = {
     "Dolor de cabeza": false,
     "Mareo": false,
@@ -53,6 +54,16 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             onChanged: (value) {
               setState(() {
                 _lastName = value;
+              });
+            },
+          ),
+          const SizedBox(height: 16.0),
+          TextFormField(
+            decoration: const InputDecoration(labelText: 'Inserte su edad'),
+            initialValue: _edad,
+            onChanged: (value) {
+              setState(() {
+                _edad = value;
               });
             },
           ),
