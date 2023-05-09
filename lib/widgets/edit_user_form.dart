@@ -15,16 +15,6 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
   String? _email;
   PhoneNumber _telephone = PhoneNumber(isoCode: 'CO');
   String? _age;
-<<<<<<< Updated upstream
-  DateTime? _fechaVacuna;
-  final Map<String, bool> _symptoms = {
-    "Dolor de cabeza": false,
-    "Mareo": false,
-    "Vomitos": false,
-    "Fiebre": false,
-  };
-  List<bool> _isSelected = [false, false, false];
-=======
   final List<DateTime?> _fechasVacuna = [null, null, null, null];
   String? _edad;
   String? _vacunaAplicada;
@@ -63,7 +53,6 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
   ];
   final List<String> _selectedSymptoms = [];
   final List<bool> _isSelected = [false, false, false];
->>>>>>> Stashed changes
   final List<String> _sexOptions = ['Masculino', 'Femenino', 'N/A'];
 
   @override
