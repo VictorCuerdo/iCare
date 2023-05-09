@@ -125,13 +125,14 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             children: _sexOptions.map((option) {
               int index = _sexOptions.indexOf(option);
               Color? backgroundColor;
-              //if (_isSelected[index]) {
-              //  if (option == 'Masculino') {
-              //    backgroundColor = Colors.blue;
-              //  } else if (option == 'Femenino') {
-              //    backgroundColor = Colors.pink;
-              //   }
-              //  }
+              /*if (_isSelected[index]) {
+              if (option == 'Masculino') {
+                  backgroundColor = Colors.blue;
+              } else if (option == 'Femenino') {
+                  backgroundColor = Colors.pink;
+               }
+                } */
+
               return Container(
                 decoration: BoxDecoration(
                   color: backgroundColor,

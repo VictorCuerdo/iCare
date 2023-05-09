@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:icare/ui/loading_screen.dart';
 import 'package:get/get.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

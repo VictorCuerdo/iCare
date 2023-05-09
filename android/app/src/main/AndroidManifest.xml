@@ -1,10 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.icare">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="icare"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/heart">
         <activity
+            
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
