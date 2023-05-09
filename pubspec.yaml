@@ -38,7 +38,8 @@ dependencies:
   get: ^4.6.5
   intl_phone_number_input: ^0.7.3+1
   calendar_date_picker2: ^0.5.2
-
+  lottie: ^1.2.1
+  font_awesome_flutter: ^10.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

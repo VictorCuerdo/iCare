@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:icare/ui/homepage.dart';
 import 'package:icare/widgets/loading_logo.dart'; // Replace with the name of your home page file
+import 'package:get/get.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);

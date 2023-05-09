@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:icare/ui/loading_screen2.dart';
 import '../widgets/edit_user_form.dart';
 
 class HomePage extends StatefulWidget {
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         OutlinedButton(
                           onPressed: () {
-                            Get.off(() => const HomePage());
+                            Get.off(() => const LoadingScreen2());
                           },
                           style: OutlinedButton.styleFrom(
                             shape: const StadiumBorder(),

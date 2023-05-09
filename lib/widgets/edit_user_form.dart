@@ -14,9 +14,8 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
   String? _lastName;
   String? _email;
   PhoneNumber _telephone = PhoneNumber(isoCode: 'CO');
-  String? _sexo;
-  double? _height;
   String? _age;
+<<<<<<< Updated upstream
   DateTime? _fechaVacuna;
   final Map<String, bool> _symptoms = {
     "Dolor de cabeza": false,
@@ -25,6 +24,46 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
     "Fiebre": false,
   };
   List<bool> _isSelected = [false, false, false];
+=======
+  final List<DateTime?> _fechasVacuna = [null, null, null, null];
+  String? _edad;
+  String? _vacunaAplicada;
+  int? _dosisSeleccionadas;
+
+  final List<String> _autocompleteOptions = [
+    'MODERNA',
+    'PFIZER-BIONTECH',
+    'JANSSEN',
+    'PFIZER-BIONTECH BIVALENT',
+    'NOVAVAX',
+    'MODERNA BIVALENT',
+  ];
+
+  final List<String> _symptomsList = [
+    'COVID-19',
+    'Escalofríos',
+    'Artralgia',
+    'Mareo',
+    'Fatiga',
+    'Producto caducado administrado',
+    'Dolor de cabeza',
+    'Astenia',
+    'Pirexia',
+    'Dolor',
+    'Dolor en la extremidad',
+    'Eritema en el sitio de inyección',
+    'Error en el almacenamiento del producto',
+    'Eritema',
+    'Sin evento adverso',
+    'Náuseas',
+    'Erupción',
+    'Disnea',
+    'Prurito',
+    'Análisis de sangre'
+  ];
+  final List<String> _selectedSymptoms = [];
+  final List<bool> _isSelected = [false, false, false];
+>>>>>>> Stashed changes
   final List<String> _sexOptions = ['Masculino', 'Femenino', 'N/A'];
 
   @override
@@ -91,7 +130,6 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                 for (int i = 0; i < _isSelected.length; i++) {
                   _isSelected[i] = i == index;
                 }
-                _sexo = _sexOptions[index];
               });
             },
             borderRadius: BorderRadius.circular(24.0),
@@ -128,21 +166,87 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             },
           ),
           const SizedBox(height: 16.0),
-          const Text('Seleccione fecha de aplicación de su dosis:',
-              style: TextStyle(fontSize: 17)),
-          CalendarDatePicker(
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2000),
-            lastDate: DateTime.now(),
-            onDateChanged: (value) {
-              setState(() {
-                _fechaVacuna = value;
+          Autocomplete<String>(
+            optionsBuilder: (TextEditingValue textEditingValue) {
+              if (textEditingValue.text.isEmpty) {
+                return const Iterable<String>.empty();
+              }
+              return _autocompleteOptions.where((String option) {
+                return option.contains(textEditingValue.text.toUpperCase());
               });
             },
+            onSelected: (String selection) {
+              setState(() {
+                _vacunaAplicada = selection;
+              });
+            },
+            fieldViewBuilder: (BuildContext context,
+                TextEditingController textEditingController,
+                FocusNode focusNode,
+                VoidCallback onFieldSubmitted) {
+              textEditingController.text = _vacunaAplicada ?? '';
+              return TextFormField(
+                controller: textEditingController,
+                focusNode: focusNode,
+                decoration: const InputDecoration(
+                    labelText: 'Ingrese nombre de la vacuna aplicada'),
+                onChanged: (value) {
+                  setState(() {
+                    _vacunaAplicada = value;
+                  });
+                },
+              );
+            },
           ),
+          const SizedBox(height: 40.0),
+          const Text('Seleccione número de dosis aplicadas'),
+          DropdownButton<int>(
+            value: _dosisSeleccionadas,
+            onChanged: (int? newValue) {
+              setState(() {
+                _dosisSeleccionadas = newValue;
+              });
+            },
+            items: [1, 2, 3, 4]
+                .map<DropdownMenuItem<int>>(
+                    (int value) => DropdownMenuItem<int>(
+                          value: value,
+                          child: Text('$value'),
+                        ))
+                .toList(),
+          ),
+          if (_dosisSeleccionadas != null)
+            ...List.generate(_dosisSeleccionadas!, (index) {
+              String labelText;
+              if (index == 0) {
+                labelText = 'Seleccione fecha de aplicación de su dosis';
+              } else {
+                labelText =
+                    'Seleccione fecha de aplicación de su ${index + 1}ª dosis';
+              }
+              return Column(
+                children: [
+                  const SizedBox(height: 16.0),
+                  Text(
+                    labelText,
+                    style: const TextStyle(fontSize: 17),
+                  ),
+                  CalendarDatePicker(
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime.now(),
+                    onDateChanged: (value) {
+                      setState(() {
+                        _fechasVacuna[index] = value;
+                      });
+                    },
+                  ),
+                ],
+              );
+            }),
           const SizedBox(height: 35.0),
           const Text(
-            'Seleccione sintomas presentados',
+            '¿Ha padecido alguno de estos sintomas?',
             style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.normal,
@@ -151,18 +255,43 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 15.0),
-          Column(
-            children: _symptoms.keys
-                .map((symptom) => CheckboxListTile(
-                      title: Text(symptom),
-                      value: _symptoms[symptom],
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _symptoms[symptom] = value!;
-                        });
-                      },
-                    ))
-                .toList(),
+          Flexible(
+            child: DropdownButton<String>(
+              isExpanded: true,
+              hint: const Text(''),
+              onChanged: (String? newValue) {
+                setState(() {
+                  if (!_selectedSymptoms.contains(newValue)) {
+                    _selectedSymptoms.add(newValue!);
+                  }
+                });
+              },
+              items: _symptomsList
+                  .map<DropdownMenuItem<String>>(
+                    (String value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: _selectedSymptoms.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text(_selectedSymptoms[index]),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    setState(() {
+                      _selectedSymptoms.removeAt(index);
+                    });
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),
