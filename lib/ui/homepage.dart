@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 60.0),
                     Container(
                       margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
+                          horizontal: 1, vertical: 10),
                       child:
                           const FormularioUsuario(), // llamamos al widget de edit_profile_page
                     ),

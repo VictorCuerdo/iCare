@@ -14,7 +14,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
   String? _lastName;
   String? _email;
   PhoneNumber _telephone = PhoneNumber(isoCode: 'CO');
-  String? _age;
+
   final List<DateTime?> _fechasVacuna = [null, null, null, null];
   String? _edad;
   String? _vacunaAplicada;
@@ -60,14 +60,15 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(20.0),
       ),
-      padding: const EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 16.0),
+      padding: const EdgeInsets.fromLTRB(18.0, 10.0, 18.0, 10.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextFormField(
-            decoration: const InputDecoration(labelText: 'Inserte Nombre(s)'),
+            decoration:
+                const InputDecoration(labelText: 'Ingrese su Nombre(s)'),
             initialValue: _name,
             onChanged: (value) {
               setState(() {
@@ -75,9 +76,10 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               });
             },
           ),
-          const SizedBox(height: 16.0),
+          const SizedBox(height: 25.0),
           TextFormField(
-            decoration: const InputDecoration(labelText: 'Inserte Apellido(s)'),
+            decoration:
+                const InputDecoration(labelText: 'Ingrese su Apellido(s)'),
             initialValue: _lastName,
             onChanged: (value) {
               setState(() {
@@ -85,13 +87,14 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               });
             },
           ),
-          const SizedBox(height: 16.0),
+          const SizedBox(height: 25.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: TextFormField(
-                  decoration: const InputDecoration(labelText: 'Inserte Email'),
+                  decoration:
+                      const InputDecoration(labelText: 'Ingrese su E-mail'),
                   initialValue: _email,
                   onChanged: (value) {
                     setState(() {
@@ -103,7 +106,31 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               IconButton(
                 icon: const Icon(Icons.help_outline),
                 tooltip:
-                    'Inserte su correo electrónico en formato xxxx@gmail.com',
+                    'Ingrese su correo electrónico en formato xxxx@gmail.com',
+                iconSize: 20,
+                onPressed: () {},
+              ),
+            ],
+          ),
+          const SizedBox(height: 25.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: TextFormField(
+                  decoration:
+                      const InputDecoration(labelText: 'Ingrese su edad'),
+                  initialValue: _edad,
+                  onChanged: (value) {
+                    setState(() {
+                      _edad = value;
+                    });
+                  },
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.help_outline),
+                tooltip: 'Ingrese su edad en digitos. Minimo 1 - Máximo 100',
                 iconSize: 20,
                 onPressed: () {},
               ),
@@ -144,18 +171,17 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               );
             }).toList(),
           ),
-          const SizedBox(height: 16.0),
+          const SizedBox(height: 25.0),
           InternationalPhoneNumberInput(
             initialValue: _telephone,
-            inputDecoration:
-                const InputDecoration(labelText: 'Inserte Numero telefono'),
+            inputDecoration: const InputDecoration(labelText: 'Número celular'),
             onInputChanged: (value) {
               setState(() {
                 _telephone = value;
               });
             },
           ),
-          const SizedBox(height: 16.0),
+          const SizedBox(height: 25.0),
           Autocomplete<String>(
             optionsBuilder: (TextEditingValue textEditingValue) {
               if (textEditingValue.text.isEmpty) {
@@ -234,7 +260,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                 ],
               );
             }),
-          const SizedBox(height: 35.0),
+          const SizedBox(height: 50.0),
           const Text(
             '¿Ha padecido alguno de estos sintomas?',
             style: TextStyle(
@@ -244,7 +270,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                 color: Colors.redAccent),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 15.0),
+          const SizedBox(height: 25.0),
           Flexible(
             child: DropdownButton<String>(
               isExpanded: true,
