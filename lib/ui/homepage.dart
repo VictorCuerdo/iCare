@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icare/ui/loading_screen2.dart';
 import '../widgets/edit_user_form.dart';
+import 'package:web_socket_channel/io.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,6 +13,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  void sendRequest (req) {
+    IOWebSocketChannel? channel;
+    try {
+      channel = IOWebSocketChannel.connect('ws://localhost:3000');
+    } catch (e) {
+      print("Error on connecting to websocket: " + e.toString());
+    }
+    channel?.sink.add(req);
+
+    channel?.stream.listen((event) {
+      if (event!.isNotEmpty) {
+        print(event);
+        channel!.sink.close();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
