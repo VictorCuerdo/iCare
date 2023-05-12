@@ -6,6 +6,7 @@ class FormularioUsuario extends StatefulWidget {
   const FormularioUsuario({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _FormularioUsuarioState createState() => _FormularioUsuarioState();
 }
 
@@ -49,7 +50,16 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
     'Erupción',
     'Disnea',
     'Prurito',
-    'Análisis de sangre'
+    'Análisis de sangre',
+    'Dolor en el lugar de la inyección',
+    'Tos',
+    'SARS-CoV-2 prueba positiva',
+    'Prurito en el lugar de la inyección',
+    'Mialgia',
+    'Sentirse anormal',
+    'Prueba SARS-CoV-2',
+    'Diarrea',
+    'Dolor de espalda',
   ];
   final List<String> _selectedSymptoms = [];
   final List<bool> _isSelected = [false, false, false];
@@ -62,13 +72,12 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.0),
       ),
-      padding: const EdgeInsets.fromLTRB(18.0, 10.0, 18.0, 10.0),
+      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextFormField(
-            decoration:
-                const InputDecoration(labelText: 'Ingrese su Nombre(s)'),
+            decoration: const InputDecoration(labelText: 'Ingrese su Nombre(s)'),
             initialValue: _name,
             onChanged: (value) {
               setState(() {
@@ -78,8 +87,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
           ),
           const SizedBox(height: 25.0),
           TextFormField(
-            decoration:
-                const InputDecoration(labelText: 'Ingrese su Apellido(s)'),
+            decoration: const InputDecoration(labelText: 'Ingrese su Apellido(s)'),
             initialValue: _lastName,
             onChanged: (value) {
               setState(() {
@@ -93,8 +101,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             children: [
               Flexible(
                 child: TextFormField(
-                  decoration:
-                      const InputDecoration(labelText: 'Ingrese su E-mail'),
+                  decoration: const InputDecoration(labelText: 'Ingrese su E-mail'),
                   initialValue: _email,
                   onChanged: (value) {
                     setState(() {
@@ -105,8 +112,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               ),
               IconButton(
                 icon: const Icon(Icons.help_outline),
-                tooltip:
-                    'Ingrese su correo electrónico en formato xxxx@gmail.com',
+                tooltip: 'Ingrese su correo electrónico en formato xxxx@gmail.com',
                 iconSize: 20,
                 onPressed: () {},
               ),
@@ -165,8 +171,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                   color: backgroundColor,
                   borderRadius: BorderRadius.circular(24.0),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                 child: Text(option),
               );
             }).toList(),
@@ -204,8 +209,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               return TextFormField(
                 controller: textEditingController,
                 focusNode: focusNode,
-                decoration: const InputDecoration(
-                    labelText: 'Ingrese nombre de la vacuna aplicada'),
+                decoration: const InputDecoration(labelText: 'Ingrese nombre de la vacuna aplicada'),
                 onChanged: (value) {
                   setState(() {
                     _vacunaAplicada = value;

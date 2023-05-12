@@ -21,7 +21,7 @@ class _LoadingScreenState2 extends State<LoadingScreen2> {
   }
 
   Future<Timer> loadData() async {
-    return Timer(const Duration(seconds: 10), onDoneLoading);
+    return Timer(const Duration(seconds: 5), onDoneLoading);
   }
 
   void onDoneLoading() {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:get/get.dart';
 import 'package:icare/ui/loading_screen2.dart';
 import '../widgets/edit_user_form.dart';
@@ -8,6 +7,7 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
@@ -28,15 +28,13 @@ class _HomePageState extends State<HomePage> {
                       Color(0xFF4093CE),
                       Color(0xFF9BCEF3),
                     ])),
-                padding: const EdgeInsets.all(35.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: <Widget>[
                     const SizedBox(height: 60.0),
                     Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 1, vertical: 10),
-                      child:
-                          const FormularioUsuario(), // llamamos al widget de edit_profile_page
+                      margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 5),
+                      child:const FormularioUsuario(), // llamamos al widget de edit_profile_page
                     ),
 
                     // BOTON DE EDITAR
@@ -50,10 +48,8 @@ class _HomePageState extends State<HomePage> {
                           },
                           style: OutlinedButton.styleFrom(
                             shape: const StadiumBorder(),
-                            side: const BorderSide(
-                                width: 3.0, color: Colors.white),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 20),
+                            side: const BorderSide(width: 3.0, color: Colors.white),
+                            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
