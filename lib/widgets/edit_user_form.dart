@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
@@ -22,6 +24,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
   String? _edad;
   String? _vacunaAplicada;
   int? _dosisSeleccionadas;
+  TextEditingController _vacunaAplicadaController = TextEditingController();
 
   final List<String> _autocompleteOptions = [
     'MODERNA',
@@ -69,6 +72,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          // FIELD 1 - NOMBRE
           TextFormField(
             decoration:
                 const InputDecoration(labelText: 'Ingrese su Nombre(s)'),
@@ -80,6 +84,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             },
           ),
           const SizedBox(height: 25.0),
+          // FIELD 2 - APELLIDOS
           TextFormField(
             decoration:
                 const InputDecoration(labelText: 'Ingrese su Apellido(s)'),
@@ -91,6 +96,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             },
           ),
           const SizedBox(height: 25.0),
+          // FIELD 3- EMAIL
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -122,6 +128,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             ],
           ),
           const SizedBox(height: 25.0),
+          // FIELD 4 - EDAD
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -161,6 +168,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             ],
           ),
           const SizedBox(height: 40.0),
+          // FIELD 5 - SEXO
           const Text('Seleccione su sexo:', style: TextStyle(fontSize: 17)),
           const SizedBox(height: 15.0),
           ToggleButtons(
@@ -202,6 +210,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               style: TextStyle(color: Colors.red),
             ),
           const SizedBox(height: 25.0),
+          // FIELD 6 - CELULAR
           InternationalPhoneNumberInput(
             initialValue: _telephone,
             inputDecoration: const InputDecoration(labelText: 'Número celular'),
@@ -212,6 +221,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             },
           ),
           const SizedBox(height: 25.0),
+          // FIELD 7 - NOMBRE VACUNA
           Autocomplete<String>(
             optionsBuilder: (TextEditingValue textEditingValue) {
               if (textEditingValue.text.isEmpty) {
@@ -225,23 +235,19 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               setState(() {
                 _vacunaAplicada = selection;
                 _isVacunaSelected = true;
+                _vacunaAplicadaController.text = selection;
               });
             },
             fieldViewBuilder: (BuildContext context,
                 TextEditingController textEditingController,
                 FocusNode focusNode,
                 VoidCallback onFieldSubmitted) {
-              textEditingController.text = _vacunaAplicada ?? '';
+              _vacunaAplicadaController = textEditingController;
               return TextFormField(
                 controller: textEditingController,
                 focusNode: focusNode,
                 decoration: const InputDecoration(
                     labelText: 'Ingrese nombre de la vacuna aplicada'),
-                onChanged: (value) {
-                  setState(() {
-                    _vacunaAplicada = value;
-                  });
-                },
               );
             },
           ),
@@ -251,6 +257,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               style: TextStyle(color: Colors.red),
             ),
           const SizedBox(height: 40.0),
+          // FIELD 8 - NUMERO DOSIS
           const Text('Seleccione número de dosis aplicadas'),
           DropdownButton<int>(
             value: _dosisSeleccionadas,
@@ -297,6 +304,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               );
             }),
           const SizedBox(height: 50.0),
+          // FIELD 9 - SINTOMAS
           const Text(
             '¿Ha padecido alguno de estos sintomas?',
             style: TextStyle(
