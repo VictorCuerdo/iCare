@@ -86,11 +86,7 @@ class _HospitalsState extends State<Hospitals> {
   @override
   Widget build(BuildContext context) {
     return _currentPosition == null
-        ? const CircularProgressIndicator(
-            value: 0.3,
-            color: Colors.greenAccent,
-            backgroundColor: Colors.grey,
-          )
+        ? Container() // Empty Container
         : Scaffold(
             // <-- Scaffold widget added
             body: Stack(

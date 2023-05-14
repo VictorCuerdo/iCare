@@ -18,7 +18,7 @@ class LoadingLogo extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 40,
                     fontFamily: 'RobotoSlab',
-                    color: Colors.white,
+                    color: Colors.red,
                   ),
                 ),
                 TextSpan(

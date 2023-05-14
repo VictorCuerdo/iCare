@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:icare/ui/formulario.dart';
 import 'package:icare/ui/dashboard.dart';
@@ -5,8 +7,6 @@ import 'package:icare/ui/news.dart';
 import 'package:icare/ui/hospitals.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:async';
-
-import '../widgets/mynewspage.dart';
 
 class Lobby extends StatefulWidget {
   @override
@@ -52,7 +52,7 @@ class _LobbyState extends State<Lobby> with SingleTickerProviderStateMixin {
           selectedGrid = index;
           _controller.reset();
         });
-        Timer(const Duration(seconds: 5), () {
+        Timer(const Duration(seconds: 4), () {
           if (animationFinished) {
             switch (index) {
               case 0:
@@ -70,7 +70,7 @@ class _LobbyState extends State<Lobby> with SingleTickerProviderStateMixin {
               case 2:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MyNewsPage()),
+                  MaterialPageRoute(builder: (context) => const NewsPage()),
                 );
                 break;
               case 3:
