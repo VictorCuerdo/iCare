@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:icare/ui/homepage.dart';
-import 'package:icare/ui/results.dart';
+import 'package:icare/ui/formulario.dart';
+import 'package:icare/ui/dashboard.dart';
 import 'package:icare/widgets/loading_logo2.dart';
 import 'package:get/get.dart';
 
@@ -21,14 +21,14 @@ class _LoadingScreenState2 extends State<LoadingScreen2> {
   }
 
   Future<Timer> loadData() async {
-    return Timer(const Duration(seconds: 10), onDoneLoading);
+    return Timer(const Duration(seconds: 5), onDoneLoading);
   }
 
   void onDoneLoading() {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const Results(),
+        builder: (context) => const Dashboard(),
       ),
     );
   }

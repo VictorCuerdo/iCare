@@ -41,7 +41,9 @@ class LoadingLogo extends StatelessWidget {
           ),
 
           const SizedBox(height: 70),
-          const CircularProgressIndicator(), // Add a circular loading indicator
+          const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                  Colors.blueGrey)), // Add a circular loading indicator
         ],
       ),
     );

@@ -14,7 +14,10 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
   String? _lastName;
   String? _email;
   PhoneNumber _telephone = PhoneNumber(isoCode: 'CO');
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isSexSelected = false;
+  bool _isVacunaSelected = false;
+  bool _isEdadSelected = false;
   final List<DateTime?> _fechasVacuna = [null, null, null, null];
   String? _edad;
   String? _vacunaAplicada;
@@ -95,6 +98,12 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                 child: TextFormField(
                   decoration:
                       const InputDecoration(labelText: 'Ingrese su E-mail'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    return null;
+                  },
                   initialValue: _email,
                   onChanged: (value) {
                     setState(() {
@@ -121,11 +130,21 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                   decoration:
                       const InputDecoration(labelText: 'Ingrese su edad'),
                   initialValue: _edad,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '*Campo obligatorio*';
+                    } else if (int.parse(value) < 1 || int.parse(value) > 100) {
+                      return 'Edad debe ser entre 1 y 100';
+                    }
+                    return null;
+                  },
                   onChanged: (value) {
                     setState(() {
                       _edad = value;
                     });
+                    _isEdadSelected = true;
                   },
+                  keyboardType: TextInputType.number,
                 ),
               ),
               IconButton(
@@ -134,6 +153,11 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                 iconSize: 20,
                 onPressed: () {},
               ),
+              if (!_isEdadSelected)
+                const Text(
+                  '*Campo obligatorio*',
+                  style: TextStyle(color: Colors.red),
+                ),
             ],
           ),
           const SizedBox(height: 40.0),
@@ -146,6 +170,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                 for (int i = 0; i < _isSelected.length; i++) {
                   _isSelected[i] = i == index;
                 }
+                _isSexSelected = true;
               });
             },
             borderRadius: BorderRadius.circular(24.0),
@@ -171,6 +196,11 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               );
             }).toList(),
           ),
+          if (!_isSexSelected)
+            const Text(
+              '*Campo obligatorio*',
+              style: TextStyle(color: Colors.red),
+            ),
           const SizedBox(height: 25.0),
           InternationalPhoneNumberInput(
             initialValue: _telephone,
@@ -194,6 +224,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             onSelected: (String selection) {
               setState(() {
                 _vacunaAplicada = selection;
+                _isVacunaSelected = true;
               });
             },
             fieldViewBuilder: (BuildContext context,
@@ -214,6 +245,11 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               );
             },
           ),
+          if (!_isVacunaSelected)
+            const Text(
+              '*Campo obligatorio*',
+              style: TextStyle(color: Colors.red),
+            ),
           const SizedBox(height: 40.0),
           const Text('Seleccione número de dosis aplicadas'),
           DropdownButton<int>(
@@ -277,7 +313,9 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               hint: const Text(''),
               onChanged: (String? newValue) {
                 setState(() {
-                  if (!_selectedSymptoms.contains(newValue)) {
+                  // Add item only if the list has less than 2 items
+                  if (_selectedSymptoms.length < 2 &&
+                      !_selectedSymptoms.contains(newValue)) {
                     _selectedSymptoms.add(newValue!);
                   }
                 });
@@ -291,6 +329,12 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                   )
                   .toList(),
             ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            tooltip: 'Máximo 2 sintomas',
+            iconSize: 20,
+            onPressed: () {},
           ),
           ListView.builder(
             shrinkWrap: true,
@@ -308,7 +352,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                 ),
               );
             },
-          ),
+          )
         ],
       ),
     );
