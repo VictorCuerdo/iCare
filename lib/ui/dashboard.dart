@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:icare/ui/lobby.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:get/get.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _DashboardState createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
-  @override
+  late WebViewController _controller;
+
   void initState() {
     super.initState();
     _controller = WebViewController()
@@ -37,25 +39,28 @@ class _DashboardState extends State<Dashboard> {
           'https://app.powerbi.com/view?r=eyJrIjoiNWM2YzM0YjgtOTQ0Zi00YmVlLWFhYWMtNTFiMGRjNDhjYzMzIiwidCI6ImJhYjBiNjc5LWJkNWYtNGZlOC1iNTE2LWM2YjhiMzE3Yzc4MiIsImMiOjR9'));
   }
 
-  late WebViewController _controller;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF4093CE),
-              Color(0xFF9BCEF3),
-            ],
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Expanded(child: WebViewWidget(controller: _controller))],
+      backgroundColor: Colors.blueGrey,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            WebViewWidget(controller: _controller),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  onPressed: () {
+                    Get.off(() => Lobby());
+                  },
+                  icon: const Icon(Icons.widgets_outlined, size: 40),
+                  color: Colors.blueGrey,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
