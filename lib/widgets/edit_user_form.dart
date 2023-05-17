@@ -145,13 +145,14 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                     }
                     return null;
                   },
+                  keyboardType: TextInputType.number,
                   onChanged: (value) {
                     setState(() {
                       _edad = value;
                     });
                     _isEdadSelected = true;
                   },
-                  keyboardType: TextInputType.number,
+                 
                 ),
               ),
               IconButton(
