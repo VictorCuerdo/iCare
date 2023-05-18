@@ -15,7 +15,6 @@ class _ResultadosState extends State<Resultados> {
 
   @override
   Widget build(BuildContext context) {
-    print(Get.arguments);
     return Scaffold(
       backgroundColor: Colors.blueGrey[900],
       body: Stack(

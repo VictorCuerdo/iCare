@@ -429,7 +429,8 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                 }
               }
               int vacNum = _autocompleteOptions.indexOf(vacunaAplicada) + 1;
-              Get.off(() => const LoadingScreen2(), arguments: [_edad, sex, _dosisSeleccionadas, vacNum, ..._selectedSymptoms]);
+              int edad = int.parse(_edad);
+              Get.off(() => const LoadingScreen2(), arguments: [edad, sex, _dosisSeleccionadas, vacNum, ..._selectedSymptoms]);
             }
           },
           style: ElevatedButton.styleFrom(

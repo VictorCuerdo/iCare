@@ -20,6 +20,7 @@ class _DashboardState extends State<Dashboard> {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
+      ..enableZoom(true)
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {

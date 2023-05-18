@@ -8,6 +8,8 @@ import 'package:icare/widgets/loading_logo2.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import 'lobby.dart';
+
 class LoadingScreen2 extends StatefulWidget {
   const LoadingScreen2({Key? key}) : super(key: key);
 
@@ -67,16 +69,36 @@ class _LoadingScreenState2 extends State<LoadingScreen2> {
   }
 
   Future sendMSG(msg) async {
-    var response = await http.post(
-                                  Uri.parse('https://aware-trail-production.up.railway.app/predict'),
-                                  body: jsonEncode({"EDAD": msg[0], "SEXO": msg[1], "NUM_DOSIS": msg[2], "VACUNA": msg[3], "SINT1": msg[4], "SINT2": msg[5]}));
+    var uri = Uri.parse('https://aware-trail-production.up.railway.app/predict');
+    var bod =  jsonEncode({
+                            "EDAD": msg[0],
+                            "SEXO": msg[1],
+                            "NUM_DOSIS": msg[2],
+                            "VACUNA": msg[3],
+                            "SINT1": msg[4],
+                            "SINT2": msg[5]
+                          });
 
-    if (response.statusCode == 200) {
+    try {
+      var response = await http.post(uri,body: bod);
       var result = jsonDecode(response.body);
       Get.off(const Resultados(), arguments: result);
-    } else {
-      throw Exception('Failed to load prediction');
+    } catch (e) {
+      Get.dialog(AlertDialog(
+        title: const Text('Error'),
+        content: const Text('No se pudo conectar con el servidor'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ));
+      Get.off(() => const Lobby());
     }
+    
 
   }
 
