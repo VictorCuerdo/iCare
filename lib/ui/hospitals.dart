@@ -42,8 +42,7 @@ class _HospitalsState extends State<Hospitals> {
       return;
     }
 
-    final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    final position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
       _currentPosition = LatLng(position.latitude, position.longitude);
       _getNearbyPlaces(_currentPosition);
@@ -112,9 +111,7 @@ class _HospitalsState extends State<Hospitals> {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: IconButton(
-                        onPressed: () {
-                          Get.off(() => Lobby());
-                        },
+                        onPressed: () {Get.off(() => const Lobby());},
                         icon: const Icon(Icons.widgets_outlined, size: 40),
                         color: Colors.blueGrey,
                       ),

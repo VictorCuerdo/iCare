@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:icare/ui/formulario.dart';
 import 'package:icare/ui/dashboard.dart';
 import 'package:icare/ui/news.dart';
@@ -9,6 +10,8 @@ import 'package:lottie/lottie.dart';
 import 'dart:async';
 
 class Lobby extends StatefulWidget {
+  const Lobby({super.key});
+
   @override
   _LobbyState createState() => _LobbyState();
 }
@@ -52,32 +55,20 @@ class _LobbyState extends State<Lobby> with SingleTickerProviderStateMixin {
           selectedGrid = index;
           _controller.reset();
         });
-        Timer(const Duration(seconds: 4), () {
+        Timer(const Duration(seconds: 2), () {
           if (animationFinished) {
             switch (index) {
               case 0:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Formulario()),
-                );
+                Get.to(const Formulario());
                 break;
               case 1:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Dashboard()),
-                );
+                Get.to(const Dashboard());
                 break;
               case 2:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const NewsPage()),
-                );
+                Get.to(const NewsPage());
                 break;
               case 3:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Hospitals()),
-                );
+                Get.to(const Hospitals());
                 break;
             }
           }
@@ -126,7 +117,7 @@ class _LobbyState extends State<Lobby> with SingleTickerProviderStateMixin {
     var statusBarHeight = MediaQuery.of(context).padding.top;
     var remainingHeight = screenHeight - appBarHeight - statusBarHeight;
 
-    return Scaffold(
+    return SafeArea(child: Scaffold(
       backgroundColor: Colors.blueGrey[900],
       body: Center(
         child: SizedBox(
@@ -146,6 +137,6 @@ class _LobbyState extends State<Lobby> with SingleTickerProviderStateMixin {
           ),
         ),
       ),
-    );
+    ));
   }
 }

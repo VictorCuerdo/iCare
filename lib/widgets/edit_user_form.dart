@@ -1,31 +1,35 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+
+import '../ui/loading_screen2.dart';
 
 class FormularioUsuario extends StatefulWidget {
   const FormularioUsuario({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _FormularioUsuarioState createState() => _FormularioUsuarioState();
 }
 
 class _FormularioUsuarioState extends State<FormularioUsuario> {
-  String? _name;
-  String? _lastName;
-  String? _email;
+  String _name = '';
+  String _lastName = '';
+  String _email = '';
   PhoneNumber _telephone = PhoneNumber(isoCode: 'CO');
+  // ignore: unused_field
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isSexSelected = false;
   bool _isVacunaSelected = false;
   bool _isEdadSelected = false;
   final List<DateTime?> _fechasVacuna = [null, null, null, null];
-  String? _edad;
-  String? _vacunaAplicada;
+  String _edad = '';
+  // ignore: unused_field
   int? _dosisSeleccionadas;
+  // ignore: prefer_final_fields, unused_field
   TextEditingController _vacunaAplicadaController = TextEditingController();
+  String vacunaAplicada = '';
 
   final List<String> _autocompleteOptions = [
     'MODERNA',
@@ -69,10 +73,24 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
   ];
   final List<String> _selectedSymptoms = [];
   final List<bool> _isSelected = [false, false, false];
-  final List<String> _sexOptions = ['Masculino', 'Femenino', 'N/A'];
+  final List<String> _sexOptions = ['N/A', 'Masculino', 'Femenino'];
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: [
+        form(),
+        const SizedBox(height: 20.0),
+        btnEnviar()
+      ],
+    );
+  }
+
+  Widget form() {
+    // ignore: no_leading_underscores_for_local_identifiers, unused_local_variable
+    String _vacunaAplicada = _autocompleteOptions.first;
+    // ignore: no_leading_underscores_for_local_identifiers
+    String _sintomasSeleccionadas = _symptomsList.first;
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -110,8 +128,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             children: [
               Flexible(
                 child: TextFormField(
-                  decoration:
-                      const InputDecoration(labelText: 'Ingrese su E-mail'),
+                  decoration: const InputDecoration(labelText: 'Ingrese su E-mail'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
@@ -141,14 +158,13 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             children: [
               Flexible(
                 child: TextFormField(
-                  decoration:
-                      const InputDecoration(labelText: 'Ingrese su edad'),
+                  decoration: const InputDecoration(labelText: 'Ingrese su edad'),
                   initialValue: _edad,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return '*Campo obligatorio*';
-                    } else if (int.parse(value) < 1 || int.parse(value) > 100) {
-                      return 'Edad debe ser entre 1 y 100';
+                    } else if (int.parse(value) < 1 || int.parse(value) > 120) {
+                      return 'Edad debe ser entre 1 y 120';
                     }
                     return null;
                   },
@@ -191,6 +207,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             },
             borderRadius: BorderRadius.circular(24.0),
             children: _sexOptions.map((option) {
+              // ignore: unused_local_variable
               int index = _sexOptions.indexOf(option);
               Color? backgroundColor;
               /*if (_isSelected[index]) {
@@ -229,7 +246,22 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
           ),
           const SizedBox(height: 25.0),
           // FIELD 7 - NOMBRE VACUNA
-          Autocomplete<String>(
+          DropdownButton<String>(
+            hint: const Text('Vacuna'),
+            items: _autocompleteOptions.map<DropdownMenuItem<String>>(
+                    (String value) => DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                    )).toList(),
+            onChanged: ((value) => {
+              setState(() {
+                _vacunaAplicada = value!;
+                vacunaAplicada = value;
+                _isVacunaSelected = true;
+              })
+            }),
+          ),
+          /*Autocomplete<String>(
             optionsBuilder: (TextEditingValue textEditingValue) {
               if (textEditingValue.text.isEmpty) {
                 return const Iterable<String>.empty();
@@ -257,7 +289,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                     labelText: 'Ingrese nombre de la vacuna aplicada'),
               );
             },
-          ),
+          ),*/
           if (!_isVacunaSelected)
             const Text(
               '*Campo obligatorio*',
@@ -287,8 +319,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               if (index == 0) {
                 labelText = 'Seleccione fecha de aplicación de su dosis';
               } else {
-                labelText =
-                    'Seleccione fecha de aplicación de su ${index + 1}ª dosis';
+                labelText = 'Seleccione fecha de aplicación de su ${index + 1}ª dosis';
               }
               return Column(
                 children: [
@@ -324,6 +355,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
           const SizedBox(height: 25.0),
           Flexible(
             child: DropdownButton<String>(
+              value: _sintomasSeleccionadas,
               isExpanded: true,
               hint: const Text(''),
               onChanged: (String? newValue) {
@@ -370,6 +402,59 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
           )
         ],
       ),
+    );
+  }
+
+  Widget btnEnviar() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            if (_edad.isEmpty || !_isSexSelected || _dosisSeleccionadas == null || vacunaAplicada.isEmpty || _selectedSymptoms.isEmpty) {
+              Get.snackbar(
+                'Error',
+                'Por favor, complete todos los campos',
+                backgroundColor: Colors.red,
+                colorText: Colors.white,
+                snackPosition: SnackPosition.BOTTOM,
+              );
+              return;
+            }else {
+              int sex = 0;
+              for(bool s in _isSelected) {
+                if (s) {
+                  sex = _isSelected.indexOf(s);
+                  break;
+                }
+              }
+              int vacNum = _autocompleteOptions.indexOf(vacunaAplicada) + 1;
+              Get.off(() => const LoadingScreen2(), arguments: [_edad, sex, _dosisSeleccionadas, vacNum, ..._selectedSymptoms]);
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            shape: const StadiumBorder(),
+            side: const BorderSide(width: 3.0, color: Colors.white),
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(Icons.outgoing_mail, color: Colors.black, size: 35),
+              SizedBox(width: 10),
+              Text(
+                'Ver resultados',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontFamily: 'Lora'),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

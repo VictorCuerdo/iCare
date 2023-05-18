@@ -1,12 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:icare/ui/formulario.dart';
+import 'package:get/get.dart';
 import 'package:icare/ui/lobby.dart';
 import 'package:icare/widgets/loading_logo.dart'; // Replace with the name of your home page file
-import 'package:get/get.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);
@@ -24,14 +22,14 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   Future<Timer> loadData() async {
-    return Timer(const Duration(seconds: 5), onDoneLoading);
+    return Timer(const Duration(seconds: 5), () => Get.off(const Lobby()));
   }
 
   void onDoneLoading() {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => Lobby(),
+        builder: (context) => const Lobby(),
       ),
     );
   }
@@ -50,8 +48,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 50),
+                      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
                       child: const LoadingLogo(),
                     ),
                   ],

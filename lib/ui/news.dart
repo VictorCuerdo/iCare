@@ -23,8 +23,7 @@ class _NewsPageState extends State<NewsPage> {
     super.initState();
     fetchNews(_currentPage);
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         fetchNews(_currentPage);
       }
     });
@@ -69,8 +68,7 @@ class _NewsPageState extends State<NewsPage> {
                       const SizedBox(height: 8.0),
                       Text(
                         article['headline']['main'],
-                        style: const TextStyle(
-                            fontSize: 20.0, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8.0),
                       Text(
@@ -89,9 +87,7 @@ class _NewsPageState extends State<NewsPage> {
               child: Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
-                  onPressed: () {
-                    Get.off(() => Lobby());
-                  },
+                  onPressed: () {Get.off(() => const Lobby());},
                   icon: const Icon(Icons.widgets_outlined, size: 40),
                   color: Colors.blueGrey,
                 ),
