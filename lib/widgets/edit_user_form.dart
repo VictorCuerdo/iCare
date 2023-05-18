@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
@@ -15,11 +17,15 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
   String? _lastName;
   String? _email;
   PhoneNumber _telephone = PhoneNumber(isoCode: 'CO');
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isSexSelected = false;
+  bool _isVacunaSelected = false;
+  bool _isEdadSelected = false;
   final List<DateTime?> _fechasVacuna = [null, null, null, null];
   String? _edad;
   String? _vacunaAplicada;
   int? _dosisSeleccionadas;
+  TextEditingController _vacunaAplicadaController = TextEditingController();
 
   final List<String> _autocompleteOptions = [
     'MODERNA',
@@ -76,6 +82,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          // FIELD 1 - NOMBRE
           TextFormField(
             decoration: const InputDecoration(labelText: 'Ingrese su Nombre(s)'),
             initialValue: _name,
@@ -86,6 +93,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             },
           ),
           const SizedBox(height: 25.0),
+          // FIELD 2 - APELLIDOS
           TextFormField(
             decoration: const InputDecoration(labelText: 'Ingrese su Apellido(s)'),
             initialValue: _lastName,
@@ -96,12 +104,20 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             },
           ),
           const SizedBox(height: 25.0),
+          // FIELD 3- EMAIL
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: TextFormField(
-                  decoration: const InputDecoration(labelText: 'Ingrese su E-mail'),
+                  decoration:
+                      const InputDecoration(labelText: 'Ingrese su E-mail'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    return null;
+                  },
                   initialValue: _email,
                   onChanged: (value) {
                     setState(() {
@@ -119,6 +135,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             ],
           ),
           const SizedBox(height: 25.0),
+          // FIELD 4 - EDAD
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -127,11 +144,22 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                   decoration:
                       const InputDecoration(labelText: 'Ingrese su edad'),
                   initialValue: _edad,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '*Campo obligatorio*';
+                    } else if (int.parse(value) < 1 || int.parse(value) > 100) {
+                      return 'Edad debe ser entre 1 y 100';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.number,
                   onChanged: (value) {
                     setState(() {
                       _edad = value;
                     });
+                    _isEdadSelected = true;
                   },
+                 
                 ),
               ),
               IconButton(
@@ -140,9 +168,15 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                 iconSize: 20,
                 onPressed: () {},
               ),
+              if (!_isEdadSelected)
+                const Text(
+                  '*Campo obligatorio*',
+                  style: TextStyle(color: Colors.red),
+                ),
             ],
           ),
           const SizedBox(height: 40.0),
+          // FIELD 5 - SEXO
           const Text('Seleccione su sexo:', style: TextStyle(fontSize: 17)),
           const SizedBox(height: 15.0),
           ToggleButtons(
@@ -152,6 +186,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                 for (int i = 0; i < _isSelected.length; i++) {
                   _isSelected[i] = i == index;
                 }
+                _isSexSelected = true;
               });
             },
             borderRadius: BorderRadius.circular(24.0),
@@ -176,7 +211,13 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               );
             }).toList(),
           ),
+          if (!_isSexSelected)
+            const Text(
+              '*Campo obligatorio*',
+              style: TextStyle(color: Colors.red),
+            ),
           const SizedBox(height: 25.0),
+          // FIELD 6 - CELULAR
           InternationalPhoneNumberInput(
             initialValue: _telephone,
             inputDecoration: const InputDecoration(labelText: 'Número celular'),
@@ -187,6 +228,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             },
           ),
           const SizedBox(height: 25.0),
+          // FIELD 7 - NOMBRE VACUNA
           Autocomplete<String>(
             optionsBuilder: (TextEditingValue textEditingValue) {
               if (textEditingValue.text.isEmpty) {
@@ -199,26 +241,30 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             onSelected: (String selection) {
               setState(() {
                 _vacunaAplicada = selection;
+                _isVacunaSelected = true;
+                _vacunaAplicadaController.text = selection;
               });
             },
             fieldViewBuilder: (BuildContext context,
                 TextEditingController textEditingController,
                 FocusNode focusNode,
                 VoidCallback onFieldSubmitted) {
-              textEditingController.text = _vacunaAplicada ?? '';
+              _vacunaAplicadaController = textEditingController;
               return TextFormField(
                 controller: textEditingController,
                 focusNode: focusNode,
-                decoration: const InputDecoration(labelText: 'Ingrese nombre de la vacuna aplicada'),
-                onChanged: (value) {
-                  setState(() {
-                    _vacunaAplicada = value;
-                  });
-                },
+                decoration: const InputDecoration(
+                    labelText: 'Ingrese nombre de la vacuna aplicada'),
               );
             },
           ),
+          if (!_isVacunaSelected)
+            const Text(
+              '*Campo obligatorio*',
+              style: TextStyle(color: Colors.red),
+            ),
           const SizedBox(height: 40.0),
+          // FIELD 8 - NUMERO DOSIS
           const Text('Seleccione número de dosis aplicadas'),
           DropdownButton<int>(
             value: _dosisSeleccionadas,
@@ -265,6 +311,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               );
             }),
           const SizedBox(height: 50.0),
+          // FIELD 9 - SINTOMAS
           const Text(
             '¿Ha padecido alguno de estos sintomas?',
             style: TextStyle(
@@ -281,7 +328,9 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
               hint: const Text(''),
               onChanged: (String? newValue) {
                 setState(() {
-                  if (!_selectedSymptoms.contains(newValue)) {
+                  // Add item only if the list has less than 2 items
+                  if (_selectedSymptoms.length < 2 &&
+                      !_selectedSymptoms.contains(newValue)) {
                     _selectedSymptoms.add(newValue!);
                   }
                 });
@@ -295,6 +344,12 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                   )
                   .toList(),
             ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            tooltip: 'Máximo 2 sintomas',
+            iconSize: 20,
+            onPressed: () {},
           ),
           ListView.builder(
             shrinkWrap: true,
@@ -312,7 +367,7 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                 ),
               );
             },
-          ),
+          )
         ],
       ),
     );

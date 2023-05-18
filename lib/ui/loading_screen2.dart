@@ -1,7 +1,10 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:icare/ui/homepage.dart';
-import 'package:icare/ui/results.dart';
+import 'package:icare/ui/formulario.dart';
+import 'package:icare/ui/dashboard.dart';
+import 'package:icare/ui/resultados.dart';
 import 'package:icare/widgets/loading_logo2.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +31,7 @@ class _LoadingScreenState2 extends State<LoadingScreen2> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const Results(),
+        builder: (context) => const Resultados(),
       ),
     );
   }
@@ -36,26 +39,15 @@ class _LoadingScreenState2 extends State<LoadingScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF4093CE),
-              Color(0xFF9BCEF3),
-            ],
+      backgroundColor: Colors.blueGrey[900],
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+            child: const LoadingLogo2(),
           ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
-              child: const LoadingLogo2(),
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }

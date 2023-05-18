@@ -11,7 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
   web_socket_channel: ^2.1.0
-
   cupertino_icons: ^1.0.2
   get:
   intl_phone_number_input: ^0.7.3+1
@@ -19,6 +18,9 @@ dependencies:
   lottie: ^1.2.1
   font_awesome_flutter: ^10.4.0
   webview_flutter: ^4.2.0
+  google_maps_flutter: ^2.2.6
+  geolocator: ^9.0.2
+  http: ^0.13.6
   
 dev_dependencies:
   flutter_test:
@@ -32,10 +34,17 @@ flutter_icons:
   image_path: "assets/icon/heart.png"
 
 flutter:
-
-  uses-material-design: true
+  
+  fonts:
+    - family: Lora
+      fonts:
+        - asset: assets/fonts/static/Lora-SemiBold.ttf
+        - asset: assets/fonts/static/Lora-BoldItalic.ttf
 
   assets:
     - assets/
     - assets/images/
-  #   - images/a_dot_ham.jpeg
+    - assets/fonts/
+
+  uses-material-design: true
+  
