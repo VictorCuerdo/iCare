@@ -17,6 +17,7 @@ class LoadingLogo extends StatelessWidget {
                   text: 'i',
                   style: TextStyle(
                     fontSize: 40,
+                    fontWeight: FontWeight.bold,
                     fontFamily: 'RobotoSlab',
                     color: Colors.red,
                   ),
@@ -25,6 +26,7 @@ class LoadingLogo extends StatelessWidget {
                   text: 'CARE',
                   style: TextStyle(
                     fontSize: 40,
+                    fontWeight: FontWeight.bold,
                     fontFamily: 'RobotoSlab',
                     color: Color.fromARGB(255, 18, 2, 91),
                   ),

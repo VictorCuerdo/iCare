@@ -1,3 +1,7 @@
+<<<<<<< Updated upstream
+=======
+// ignore_for_file: library_private_types_in_public_api
+>>>>>>> Stashed changes
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icare/ui/lobby.dart';
@@ -10,6 +14,17 @@ class Resultados extends StatefulWidget {
 }
 
 class _ResultadosState extends State<Resultados> {
+<<<<<<< Updated upstream
+=======
+  late Map<String, dynamic> result;
+
+  @override
+  void initState() {
+    super.initState();
+    result = Get.arguments as Map<String, dynamic>;
+  }
+
+>>>>>>> Stashed changes
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,10 +35,20 @@ class _ResultadosState extends State<Resultados> {
             child: Padding(
               padding: const EdgeInsets.all(35.0),
               child: Column(
+<<<<<<< Updated upstream
                 children: const <Widget>[
                   SizedBox(
                       height:
                           80.0), // Increase the space to avoid overlap with the icons
+=======
+                children: <Widget>[
+                  const SizedBox(
+                      height:
+                          80.0), // Increase the space to avoid overlap with the icons
+                  ...result.entries
+                      .map((entry) => Text('${entry.key}: ${entry.value}'))
+                      .toList(),
+>>>>>>> Stashed changes
                   // Other widgets go here...
                 ],
               ),
