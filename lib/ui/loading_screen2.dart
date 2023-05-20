@@ -70,36 +70,34 @@ class _LoadingScreenState2 extends State<LoadingScreen2> {
 
   Future sendMSG(msg) async {
     var uri = Uri.parse('https://aware-trail-production.up.railway.app/predict');
-    var bod =  jsonEncode({
-                            "EDAD": msg[0],
-                            "SEXO": msg[1],
-                            "NUM_DOSIS": msg[2],
-                            "VACUNA": msg[3],
-                            "SINT1": msg[4],
-                            "SINT2": msg[5]
-                          });
-
+    var bod = jsonEncode({
+      "EDAD": (msg[0]),
+      "SEXO": (msg[1]),
+      "NUM_DOSIS": (msg[2]),
+      "VACUNA": (msg[3]),
+      "SINT1": (msg[4]),
+      "SINT2": (msg[5])
+    });
     try {
-      var response = await http.post(uri,body: bod);
+      var response = await http.post(
+                          uri,
+                          headers: {'Content-Type': 'application/json'},
+                          body: bod);
       var result = jsonDecode(response.body);
       Get.off(const Resultados(), arguments: result);
     } catch (e) {
-      Get.dialog(AlertDialog(
+      await Get.dialog(AlertDialog(
         title: const Text('Error'),
         content: const Text('No se pudo conectar con el servidor'),
         actions: [
           TextButton(
-            onPressed: () {
-              Get.back();
-            },
+            onPressed: () {Get.back();},
             child: const Text('OK'),
           ),
         ],
       ));
       Get.off(() => const Lobby());
     }
-    
-
   }
 
   @override
