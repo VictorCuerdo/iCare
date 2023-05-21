@@ -117,8 +117,9 @@ class _LobbyState extends State<Lobby> with SingleTickerProviderStateMixin {
     var statusBarHeight = MediaQuery.of(context).padding.top;
     var remainingHeight = screenHeight - appBarHeight - statusBarHeight;
 
-    return SafeArea(child: Scaffold(
-      backgroundColor: Colors.blueGrey[900],
+    return SafeArea(
+        child: Scaffold(
+      backgroundColor: const Color.fromRGBO(20, 20, 50, 1),
       body: Center(
         child: SizedBox(
           height: remainingHeight,

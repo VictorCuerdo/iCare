@@ -18,6 +18,7 @@ class LoadingLogo extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 40,
                     fontFamily: 'RobotoSlab',
+                    fontWeight: FontWeight.bold,
                     color: Colors.red,
                   ),
                 ),
@@ -26,6 +27,7 @@ class LoadingLogo extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 40,
                     fontFamily: 'RobotoSlab',
+                    fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 18, 2, 91),
                   ),
                 ),
@@ -39,11 +41,9 @@ class LoadingLogo extends StatelessWidget {
             height: 250,
             fit: BoxFit.cover,
           ),
-
           const SizedBox(height: 70),
           const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                  Colors.blueGrey)), // Add a circular loading indicator
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey)),
         ],
       ),
     );

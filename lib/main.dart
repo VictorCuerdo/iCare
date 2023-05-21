@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:icare/ui/loading_screen.dart';
 import 'package:get/get.dart';
 
+import 'controller/user_controller.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(UserController());
   runApp(const MyApp());
 }
 

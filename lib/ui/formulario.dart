@@ -15,8 +15,9 @@ class Formulario extends StatefulWidget {
 class _FormularioState extends State<Formulario> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
-      backgroundColor: Colors.blueGrey[900],
+    return SafeArea(
+        child: Scaffold(
+      backgroundColor: const Color.fromRGBO(20, 20, 50, 1),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(20.0),
@@ -25,7 +26,9 @@ class _FormularioState extends State<Formulario> {
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
-                  onPressed: () {Get.off(() => const Lobby());},
+                  onPressed: () {
+                    Get.off(() => const Lobby());
+                  },
                   icon: const Icon(Icons.widgets_outlined, size: 40),
                   color: Colors.white,
                 ),
