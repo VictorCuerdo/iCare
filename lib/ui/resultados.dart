@@ -19,6 +19,15 @@ class _ResultadosState extends State<Resultados> {
   late Map<String, dynamic> result;
   Map<String, bool> visibility = {};
 
+  // Defined detailText List with the provided texts
+  final List<String> detailText = [
+    'Este resultado determina si el paciente entra o no en el grupo de personas reportadas por fallecimiento tras la vacuna contra covid-19. Las muertes directamente atribuibles a las vacunas contra el COVID-19 son extremadamente raras. Sin embargo, ha habido algunas muertes que se han asociado con complicaciones o reacciones a las vacunas...Así el modelo de predicción te haya arrojado un resultado positivo, cuida tu cuerpo y revisate periodicamente!',
+    'Este resultado determina si el paciente está o no en riesgo de muerte por haber recibido la vacuna contra el covid-19.El modelo de predicción arroja una cifra entre 1 y 0, y un porcentaje de predicción, los cuales serán interpretados para brindarle una respuesta...Así el modelo de predicción te haya arrojado un resultado positivo, cuida tu cuerpo y revisate periodicamente!',
+    'Este resultado determina si el paciente está o no en riesgo de ser ingresado a la unidad de cuidados intensivos.Los casos de personas que necesitan cuidados intensivos después de recibir una vacuna contra el COVID-19 son extremadamente raros, y generalmente están asociados con reacciones severas a la vacuna...Así el modelo de predicción te haya arrojado un resultado positivo, cuida tu cuerpo y revisate periodicamente!',
+    'Este resultado determina si el paciente está o no en riesgo de ser hospitalizado, o si en su defecto ya lo estuvo...Así el modelo de predicción te haya arrojado un resultado positivo, cuida tu cuerpo y revisate periodicamente!',
+    'Este resultado determina si el paciente está o no en riesgo de sufrir una discapacidad como consecuencia de la vacuna administrada...Así el modelo de predicción te haya arrojado un resultado positivo, cuida tu cuerpo y revisate periodicamente!',
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -27,6 +36,10 @@ class _ResultadosState extends State<Resultados> {
     if (userController.userName.value.isNotEmpty) {
       _username = userController.userName.value;
     }
+    // Initialize visibility.
+    result.keys.forEach((key) {
+      visibility[key] = false;
+    });
   }
 
   String _interpretResult(String key, List<dynamic> values) {
@@ -139,17 +152,20 @@ class _ResultadosState extends State<Resultados> {
             if (visibility[entry.key] ?? false)
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: 100.0,
+                padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
-                  color: const Color.fromRGBO(87, 17, 200, 1),
+                  color: const Color.fromRGBO(222, 41, 134, 1),
                 ),
                 child: Center(
                   child: Text(
-                    "Here goes the text ${index + 1}",
-                    style: TextStyle(
-                      color: Colors.primaries[index % Colors.primaries.length],
+                    detailText[index],
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontFamily: 'Lora',
                     ),
+                    textAlign: TextAlign.justify,
                   ),
                 ),
               ),
