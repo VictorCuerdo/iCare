@@ -21,19 +21,18 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
   String _lastName = '';
   String _email = '';
   PhoneNumber _telephone = PhoneNumber(isoCode: 'CO');
-  // ignore: unused_field
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isSexSelected = false;
   bool _isVacunaSelected = false;
   bool _isEdadSelected = false;
   final List<DateTime?> _fechasVacuna = [null, null, null, null];
   String _edad = '';
-  // ignore: unused_field
   int? _dosisSeleccionadas;
-  // ignore: prefer_final_fields, unused_field
-  TextEditingController _vacunaAplicadaController = TextEditingController();
+  final TextEditingController _vacunaAplicadaController =
+      TextEditingController();
 
   String vacunaAplicada = '';
+  final String _vacunaAplicada = '';
 
   final List<String> _autocompleteOptions = [
     'MODERNA',
@@ -124,6 +123,9 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             onChanged: (value) {
               setState(() {
                 _lastName = value;
+                if (_name.isNotEmpty) {
+                  userController.updateLastName(_lastName);
+                }
               });
             },
           ),
@@ -146,6 +148,9 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                   onChanged: (value) {
                     setState(() {
                       _email = value;
+                      if (_name.isNotEmpty) {
+                        userController.updateEmail(_email);
+                      }
                     });
                   },
                 ),
@@ -215,16 +220,8 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             },
             borderRadius: BorderRadius.circular(24.0),
             children: _sexOptions.map((option) {
-              // ignore: unused_local_variable
               int index = _sexOptions.indexOf(option);
               Color? backgroundColor;
-              /*if (_isSelected[index]) {
-              if (option == 'Masculino') {
-                  backgroundColor = Colors.blue;
-              } else if (option == 'Femenino') {
-                  backgroundColor = Colors.pink;
-               }
-                } */
 
               return Container(
                 decoration: BoxDecoration(
@@ -250,8 +247,16 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             onInputChanged: (value) {
               setState(() {
                 _telephone = value;
+
+                print(_telephone);
               });
             },
+            ignoreBlank: false,
+            autoValidateMode: AutovalidateMode.disabled,
+            selectorTextStyle:
+                const TextStyle(color: Color.fromARGB(255, 22, 16, 16)),
+            keyboardType: const TextInputType.numberWithOptions(
+                signed: true, decimal: true),
           ),
           const SizedBox(height: 25.0),
           // FIELD 7 - NOMBRE VACUNA
@@ -269,38 +274,12 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                     _vacunaAplicada = value!;
                     vacunaAplicada = value;
                     _isVacunaSelected = true;
+                    if (_name.isNotEmpty) {
+                      userController.updateVacunaAplicada(_vacunaAplicada);
+                    }
                   })
                 }),
           ),
-          /*Autocomplete<String>(
-            optionsBuilder: (TextEditingValue textEditingValue) {
-              if (textEditingValue.text.isEmpty) {
-                return const Iterable<String>.empty();
-              }
-              return _autocompleteOptions.where((String option) {
-                return option.contains(textEditingValue.text.toUpperCase());
-              });
-            },
-            onSelected: (String selection) {
-              setState(() {
-                _vacunaAplicada = selection;
-                _isVacunaSelected = true;
-                _vacunaAplicadaController.text = selection;
-              });
-            },
-            fieldViewBuilder: (BuildContext context,
-                TextEditingController textEditingController,
-                FocusNode focusNode,
-                VoidCallback onFieldSubmitted) {
-              _vacunaAplicadaController = textEditingController;
-              return TextFormField(
-                controller: textEditingController,
-                focusNode: focusNode,
-                decoration: const InputDecoration(
-                    labelText: 'Ingrese nombre de la vacuna aplicada'),
-              );
-            },
-          ),*/
           if (!_isVacunaSelected)
             const Text(
               '*Campo obligatorio*',
@@ -314,6 +293,10 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
             onChanged: (int? newValue) {
               setState(() {
                 _dosisSeleccionadas = newValue;
+                if (_name.isNotEmpty) {
+                  userController
+                      .updateDosisSeleccionadas(_dosisSeleccionadas as int);
+                }
               });
             },
             items: [1, 2, 3, 4]
@@ -376,6 +359,9 @@ class _FormularioUsuarioState extends State<FormularioUsuario> {
                   if (_selectedSymptoms.length < 2 &&
                       !_selectedSymptoms.contains(newValue)) {
                     _selectedSymptoms.add(newValue!);
+                  }
+                  if (_name.isNotEmpty) {
+                    userController.updateSymptoms(_selectedSymptoms);
                   }
                 });
               },

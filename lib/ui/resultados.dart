@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icare/ui/lobby.dart';
+import '../controller/print_Controller.dart';
 import '../controller/user_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,6 +23,7 @@ class _ResultadosState extends State<Resultados> {
   void initState() {
     super.initState();
     result = Get.arguments as Map<String, dynamic>;
+    userController.updateResults(result);
     if (userController.userName.value.isNotEmpty) {
       _username = userController.userName.value;
     }
@@ -188,7 +190,9 @@ class _ResultadosState extends State<Resultados> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      printDocument();
+                    },
                     icon: const Icon(Icons.print_outlined, size: 40),
                     color: Colors.white,
                   ),

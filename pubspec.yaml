@@ -22,6 +22,9 @@ dependencies:
   geolocator: ^9.0.2
   http: ^0.13.6
   google_fonts: ^2.1.0
+  printing: ^5.9.3
+  pdf: ^3.8.4
+ 
   
 dev_dependencies:
   flutter_test:
@@ -42,12 +45,6 @@ flutter:
         - asset: assets/fonts/static/Lora-SemiBold.ttf
         - asset: assets/fonts/static/Lora-BoldItalic.ttf
 
-    - family: Lora
-      fonts:
-        - asset: assets/fonts/static/Lora-SemiBold.ttf
-        - asset: assets/fonts/static/Lora-BoldItalic.ttf
-        
-  
   assets:
     - assets/
     - assets/images/
