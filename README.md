@@ -1,2 +1,2 @@
 # icare
-Proyecto final de grado Ing Sistemas 2023-I
+Flutter with Dart Fully Functional API consumption, AI Data Model Consumption Application
